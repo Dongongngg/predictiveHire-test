@@ -1,0 +1,29 @@
+version: "3"
+services:
+  db-service:
+    build: "./db-service"
+    depends_on:
+      - db-service-db
+    volumes:
+      - ./db-service:/test
+
+  db-service-db:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+  bff-service:
+    build: "./bff-service"
+    depends_on:
+      - bff-service-db
+    volumes:
+      - ./bff-service:/test
+
+  bff-service-db:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
