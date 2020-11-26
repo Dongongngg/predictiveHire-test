@@ -21,7 +21,7 @@ const getVacancys = async (req: Request, res: Response): Promise<void> => {
 
 const addVacancy = async (req: Request, res: Response): Promise<void> => {
   try {
-    const body = req.body as Pick<MyVacancy, 'title' | 'description' | 'expiredAt'>;
+    const body = req.body;
 
     const vacancy: MyVacancy = new Vacancy({
       title: body.title,
@@ -43,22 +43,22 @@ const addVacancy = async (req: Request, res: Response): Promise<void> => {
 
 const updateVacancy = async (req: Request, res: Response): Promise<void> => {
   try {
-    const vacancy: MyVacancy | null = await Vacancy.findById(req.params.id);
-    console.log(req.params.id);
-
-    if (!vacancy) {
+    const body = req.body;
+    const vacancy: MyVacancy = new Vacancy({
+      _id: req.params.id,
+      title: body.title,
+      description: body.description,
+      expiredAt: body.expiredAt,
+    });
+    const newVacancy: MyVacancy | null = await Vacancy.findByIdAndUpdate(req.params.id, vacancy, {
+      new: true,
+    });
+    if (newVacancy == null) {
       res.status(401).json({
         success: false,
         error: `No vacancy found by id:${req.params.id}`,
       });
     } else {
-      const body = req.body as Pick<MyVacancy, 'title' | 'description' | 'expiredAt'>;
-      const vacancy: MyVacancy = new Vacancy({
-        title: body.title,
-        description: body.description,
-        expiredAt: body.expiredAt,
-      });
-      const newVacancy: MyVacancy | null = await vacancy.updateOne(vacancy);
       res.status(200).json({
         success: true,
         message: 'vacancy updated',
@@ -76,12 +76,18 @@ const updateVacancy = async (req: Request, res: Response): Promise<void> => {
 
 const deleteVacancy = async (req: Request, res: Response): Promise<void> => {
   try {
-    const vacancy: MyVacancy | null = await Vacancy.findByIdAndRemove(req.params.id);
-
-    res.status(200).json({
-      success: true,
-      data: vacancy,
-    });
+    const vacancy: MyVacancy | null = await Vacancy.findByIdAndDelete(req.params.id);
+    if (vacancy === null) {
+      res.status(401).json({
+        success: false,
+        error: `No vacancy found by id:${req.params.id}`,
+      });
+    } else {
+      res.status(200).json({
+        success: true,
+        data: vacancy,
+      });
+    }
   } catch (error) {
     res.status(500).json({
       success: true,
