@@ -1,11 +1,18 @@
 import { Router } from 'express';
-import { getVacancys, addVacancy, updateVacancy, deleteVacancy } from '../controllers/vacancy';
+import {
+  getVacancys,
+  getVacancyById,
+  addVacancy,
+  updateVacancy,
+  deleteVacancy,
+} from '../controllers/vacancy';
 
 const router: Router = Router();
 
-router.get('/vacancys', getVacancys);
-router.post('/vacancy', addVacancy);
-router.put('/vacancy/:id', updateVacancy);
-router.delete('/vacancy/:id', deleteVacancy);
+router.get('/api/vacancys', getVacancys);
+router.post('/api/vacancy', addVacancy);
+router.get('/api/vacancy/:id', getVacancyById);
+router.put('/api/vacancy/:id', updateVacancy);
+router.delete('/api/vacancy/:id', deleteVacancy);
 
 export default router;

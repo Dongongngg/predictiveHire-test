@@ -11,7 +11,24 @@ const getVacancys = async (req: Request, res: Response): Promise<void> => {
     const allVacancys: MyVacancy[] = await Vacancy.find();
     res.status(200).json({ success: true, data: allVacancys });
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    res.status(500).json({ success: false, data: error.message });
+  }
+};
+
+// @desc    get one vacancy by id
+// @route   GET /vacancys
+// @access  all user
+
+const getVacancyById = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const vacancy: MyVacancy | null = await Vacancy.findById(req.params.id);
+    if (vacancy === null) {
+      res.status(401).json({ success: false, data: `No vacancy found by id:${req.params.id}` });
+    } else {
+      res.status(200).json({ success: true, data: vacancy });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false, data: error.message });
   }
 };
 
@@ -31,9 +48,9 @@ const addVacancy = async (req: Request, res: Response): Promise<void> => {
 
     const newVacancy: MyVacancy = await Vacancy.create(vacancy);
 
-    res.status(201).json({ message: 'Vancancy added', data: newVacancy });
+    res.status(201).json({ success: true, data: newVacancy });
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    res.status(500).json({ success: false, data: error.message });
   }
 };
 
@@ -56,7 +73,7 @@ const updateVacancy = async (req: Request, res: Response): Promise<void> => {
     if (newVacancy == null) {
       res.status(401).json({
         success: false,
-        error: `No vacancy found by id:${req.params.id}`,
+        data: `No vacancy found by id:${req.params.id}`,
       });
     } else {
       res.status(200).json({
@@ -66,7 +83,7 @@ const updateVacancy = async (req: Request, res: Response): Promise<void> => {
       });
     }
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    res.status(500).json({ success: false, data: error.message });
   }
 };
 
@@ -80,7 +97,7 @@ const deleteVacancy = async (req: Request, res: Response): Promise<void> => {
     if (vacancy === null) {
       res.status(401).json({
         success: false,
-        error: `No vacancy found by id:${req.params.id}`,
+        data: `No vacancy found by id:${req.params.id}`,
       });
     } else {
       res.status(200).json({
@@ -91,9 +108,9 @@ const deleteVacancy = async (req: Request, res: Response): Promise<void> => {
   } catch (error) {
     res.status(500).json({
       success: true,
-      error: error.message,
+      data: error.message,
     });
   }
 };
 
-export { getVacancys, updateVacancy, deleteVacancy, addVacancy };
+export { getVacancys, getVacancyById, updateVacancy, deleteVacancy, addVacancy };
