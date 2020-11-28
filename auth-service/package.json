@@ -1,7 +1,7 @@
 {
-  "name": "bff-service",
+  "name": "auth-service",
   "version": "1.0.0",
-  "description": "",
+  "description": "receiving request from BFF, the authentication that only authorized user can use db-service",
   "main": "index.ts",
   "scripts": {
     "build": "tsc -p .",

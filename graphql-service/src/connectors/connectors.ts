@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import { Vacancy, VacancyInput, RestRes } from '../interfaces/vacancy';
+import { VacancyInput, RestRes } from '../interfaces/vacancy';
 
 //  Use Graphql as wrapper to send rest api request
 
@@ -32,15 +32,6 @@ export const restConnector = async (
         throw new Error('id format error');
       }
     });
-
-  return data;
-};
-
-export const getAll = async (url: string): Promise<Vacancy[]> => {
-  const data: Vacancy[] = await fetch(url)
-    .then((res) => res.json())
-    .then((data) => data.data)
-    .catch((error) => error);
 
   return data;
 };
