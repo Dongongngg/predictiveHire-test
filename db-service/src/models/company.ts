@@ -10,12 +10,6 @@ const Company: Schema = new Schema({
     type: String,
     required: true,
   },
-  vacancies: {
-    type: Array,
-  },
-  users: {
-    type: Array,
-  },
 });
 
 export default model<MyCompany>('Company', Company);

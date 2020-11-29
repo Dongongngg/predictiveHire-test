@@ -1,10 +1,12 @@
 import { MyUser } from './../types/user';
 import { model, Schema } from 'mongoose';
 
-const userSchema: Schema = new Schema({
+const User: Schema = new Schema({
+  companyId: {
+    type: String,
+  },
   name: {
     type: String,
-    required: true,
   },
   username: {
     type: String,
@@ -14,13 +16,10 @@ const userSchema: Schema = new Schema({
     type: String,
     required: true,
   },
-  companyId: {
-    type: String,
-  },
-  role: {
-    type: String,
+  roles: {
+    type: [String],
     required: true,
   },
 });
 
-export default model<MyUser>('User', userSchema);
+export default model<MyUser>('User', User);

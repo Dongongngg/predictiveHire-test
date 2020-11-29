@@ -1,7 +1,7 @@
 {
   "name": "db-service",
   "version": "1.0.0",
-  "description": "receiving request from BFF, mainly to handle CRUD to database",
+  "description": "CRUD operation of database",
   "main": "index.ts",
   "scripts": {
     "build": "tsc -p .",

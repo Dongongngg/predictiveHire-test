@@ -2,28 +2,41 @@ version: "3"
 services:
   db-service:
     build: "./db-service"
+    ports:
+      - "5000:5000"
     depends_on:
       - db-service-db
-    volumes:
-      - ./db-service:/test
 
   db-service-db:
     image: mongo
     restart: always
     environment:
+      MONGO_INITDB_DATABASE: ph-test
       MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
-
-  bff-service:
-    build: "./bff-service"
-    depends_on:
-      - bff-service-db
+      MONGO_INITDB_ROOT_PASSWORD: password
     volumes:
-      - ./bff-service:/test
+      - ./init-db-svc-data.js/docker-entrypoint-initdb.d/init-db-svc-data.js:ro
+      - ./db-service-vol:/data/db
 
-  bff-service-db:
+  auth-service:
+    build: "./auth-service"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - auth-service-db
+
+  auth-service-db:
     image: mongo
     restart: always
     environment:
+      MONGO_INITDB_DATABASE: ph-test-user
       MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - ./init-auth-svc-data.js/docker-entrypoint-initdb.d/init-auth-svc-data.js:ro
+      - ./auth-service-vol:/data/db
+
+  bff-service:
+    build: "./bff-service"
+    ports:
+      - "4000:4000"
