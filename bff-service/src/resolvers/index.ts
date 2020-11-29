@@ -1,6 +1,6 @@
-import Vacancy from './vacancy';
-import User from './user';
+import db from './db';
+import auth from './auth';
 
-const resolversArr = [Vacancy, User];
+const resolversArr = [db, auth];
 
 export default resolversArr;

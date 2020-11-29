@@ -8,7 +8,19 @@ import typeDefs from './typeDefs';
 //  resolvers
 import resolvers from './resolvers';
 
-const server = new ApolloServer({ typeDefs: typeDefs, resolvers: resolvers });
+const server = new ApolloServer({
+  typeDefs: typeDefs,
+  resolvers: resolvers,
+  formatError: (err) => {
+    // Don't give the specific errors to the client.
+    if (err.message.startsWith('Field ')) {
+      return new Error('Input format error');
+    } else if (err.message.startsWith('Cast to ObjectId failed for value')) {
+      throw new Error('id format error');
+    }
+    return err;
+  },
+});
 
 const app: Application = express();
 

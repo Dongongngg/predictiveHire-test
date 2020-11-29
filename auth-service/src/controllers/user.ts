@@ -7,33 +7,42 @@ import { MyUser } from '../types/user';
 // @route   POST /auth/login
 // @access  public
 
-const login = async (req: Request, res: Response): Promise<Response> => {
+const login = async (req: Request, res: Response): Promise<void> => {
   // Check if user exist
-  const loginUser = await User.findOne({ username: req.body.username });
+  let loginUser = await User.findOne({ username: req.body.username });
   if (!loginUser) {
-    return res.status(401).json({
+    res.status(401).json({
       success: false,
-      error: 'Username not exist.',
+      data: 'Username not exist.',
     });
+    return;
   }
   //  Check if password is correct
-  const loginPassword = await User.findOne({ password: req.body.password });
-  if (!loginPassword) {
-    return res.status(401).json({
+  loginUser = await User.findOne({ password: req.body.password });
+  if (loginUser === null) {
+    res.status(401).json({
       success: false,
-      error: 'Password is wrong.',
+      data: 'Password is wrong.',
     });
   } else {
     const newToken = jwt.sign({ _id: loginUser._id }, process.env.TOKEN_SECRET || '', {
       expiresIn: 3600,
     });
 
-    return res.header('auth-token', newToken).status(200).json({
-      success: true,
-      id: loginUser._id,
-      username: loginUser.username,
-      token: newToken,
-    });
+    res
+      .header('auth-token', newToken)
+      .status(200)
+      .json({
+        success: true,
+        data: {
+          _id: loginUser._id,
+          username: loginUser.username,
+          name: loginUser.name,
+          companyId: loginUser.companyId,
+          roles: loginUser.roles,
+          token: newToken,
+        },
+      });
   }
 };
 

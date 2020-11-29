@@ -1,6 +1,6 @@
-import Vacancy from './vacancy';
-import User from './user';
+import db from './db';
+import auth from './auth';
 
-const typeDefsArr = [Vacancy, User];
+const typeDefsArr = [db, auth];
 
 export default typeDefsArr;
