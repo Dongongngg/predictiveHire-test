@@ -1,55 +1,51 @@
-version: "3"
-
-# networks:
-#   db-network:
-#     driver: bridge
-#   auth-network:
-#     driver: bridge
+version: "3.7"
 
 services:
+  bff-service:
+    build: "./bff-service"
+    depends_on:
+      - db-service
+      - auth-service
+    # environment:
+    #   - DB_SERVICE_URI=http://db-service:5000/
+    #   - AUTH_SERVICE_URI=http://auth-service:8000/
+    ports:
+      - "4001:4000"
+    volumes:
+      - ./bff-service:/opt/app
+
   db-service:
     build:
       context: "."
       dockerfile: "./db-service/Dockerfile"
     ports:
-      - "5000:5000"
-    # links:
-    #   - db-service-db
+      - "5001:5000"
     depends_on:
       - db-service-db
-    environment:
-      MONGO_URI: mongodb://james:666666@db-service-db/ph-test
     volumes:
       - ./db-service:/opt/app
-    # networks:
-    #   - db-network
 
   db-service-db:
     image: mongo
     restart: always
     ports:
-      - "5001:27017"
+      - "27017:27017"
     environment:
-      # MONGO_INITDB_DATABASE: ph-test
-      MONGO_INITDB_ROOT_USERNAME: james
+      MONGO_INITDB_DATABASE: admin
+      MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: 666666
-    # networks:
-    #   - db-network
+    volumes:
+      - ./init-mongo-db.js:/docker-entrypoint-initdb.d/init-mongo-db.js:ro
+      - /db-vol/db-service:/data/db
 
   auth-service:
     build:
       context: "."
       dockerfile: "./auth-service/Dockerfile"
     ports:
-      - "8000:8000"
-    # links:
-    #   - auth-service-db
+      - "8001:8000"
     depends_on:
       - auth-service-db
-    environment:
-      MONGO_URI: mongodb://james:666666@auth-service-db/ph-test-user
-    # networks:
-    #   - auth-network
     volumes:
       - ./auth-service:/opt/app
 
@@ -57,21 +53,11 @@ services:
     image: mongo
     restart: always
     ports:
-      - "8001:27017"
+      - "27018:27017"
     environment:
-      # MONGO_INITDB_DATABASE: ph-test-user
-      MONGO_INITDB_ROOT_USERNAME: james
+      MONGO_INITDB_DATABASE: admin
+      MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: 666666
-    # networks:
-    #   - auth-network
-
-  bff-service:
-    build: "./bff-service"
-    depends_on:
-      - db-service
-      - auth-service
-    environment:
-      - DB_SERVICE_URI=http://db-service:5000
-      - AUTH_SERVICE_URI=http://auth-service:8000
-    ports:
-      - "4000:4000"
+    volumes:
+      - ./init-mongo-auth.js:/docker-entrypoint-initdb.d/init-mongo-auth.js:ro
+      - /db-vol/auth-service:/data/db

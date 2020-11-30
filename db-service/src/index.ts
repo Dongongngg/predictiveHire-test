@@ -3,7 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 //routes
-import companyRoute from './routes/company';
+import companyRoute from './routes/test';
 import vacancyRoute from './routes/vacancy';
 //
 import connectDB from './config/db';

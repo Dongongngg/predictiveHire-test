@@ -3,7 +3,7 @@ import { MyVacancy } from '../types/vacancy';
 import Vacancy from '../models/vacancy';
 
 // @desc    get all vacancys
-// @route   GET /vacancys
+// @route   GET /api/vacancys
 // @access  all user
 
 const getVacancys = async (req: Request, res: Response): Promise<void> => {
@@ -16,7 +16,7 @@ const getVacancys = async (req: Request, res: Response): Promise<void> => {
 };
 
 // @desc    get one vacancy by id
-// @route   GET /vacancys
+// @route   GET /api/vacancy/:id
 // @access  all user
 
 const getVacancyById = async (req: Request, res: Response): Promise<void> => {
@@ -33,7 +33,7 @@ const getVacancyById = async (req: Request, res: Response): Promise<void> => {
 };
 
 // @desc    create an vacancy
-// @route   POST /vacancy
+// @route   POST /api/vacancy/
 // @access  admin user
 
 const addVacancy = async (req: Request, res: Response): Promise<void> => {
@@ -55,7 +55,7 @@ const addVacancy = async (req: Request, res: Response): Promise<void> => {
 };
 
 // @desc    edit an vacancy
-// @route   PUT /vacancy/:id
+// @route   PUT /api/vacancy/:id
 // @access  admin user
 
 const updateVacancy = async (req: Request, res: Response): Promise<void> => {
@@ -88,7 +88,7 @@ const updateVacancy = async (req: Request, res: Response): Promise<void> => {
 };
 
 // @desc    delete an vacancy
-// @route   DELETE /vacancy/:id
+// @route   DELETE /api/vacancy/:id
 // @access  admin user
 
 const deleteVacancy = async (req: Request, res: Response): Promise<void> => {

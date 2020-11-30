@@ -2,7 +2,6 @@ import dbConnector from '../helpers/dbConnector';
 import { VacancyInput, RestRes } from '../interfaces/db';
 
 const restUrl = 'http://localhost:5000/api/';
-
 // dbConnector:
 //   { method: string,
 //    url: string,
