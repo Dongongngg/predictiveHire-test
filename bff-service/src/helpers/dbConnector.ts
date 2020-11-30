@@ -10,7 +10,7 @@ interface connectorOption {
   input?: VacancyInput;
 }
 
-const restConnector = async (option: connectorOption): Promise<RestRes> => {
+const dbConnector = async (option: connectorOption): Promise<RestRes> => {
   const data: RestRes = await fetch(option.id ? option.url + option.id : option.url, {
     method: option.method,
     headers: {
@@ -32,4 +32,4 @@ const restConnector = async (option: connectorOption): Promise<RestRes> => {
   return data;
 };
 
-export default restConnector;
+export default dbConnector;

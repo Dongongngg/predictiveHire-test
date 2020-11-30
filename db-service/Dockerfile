@@ -1,8 +1,8 @@
 FROM node:latest
 
-COPY . /ph-test
+COPY . /opt/app
 
-WORKDIR /ph-test
+WORKDIR /opt/app/db-service
 
 RUN npm install
 

@@ -1,42 +1,77 @@
 version: "3"
+
+# networks:
+#   db-network:
+#     driver: bridge
+#   auth-network:
+#     driver: bridge
+
 services:
   db-service:
-    build: "./db-service"
+    build:
+      context: "."
+      dockerfile: "./db-service/Dockerfile"
     ports:
       - "5000:5000"
+    # links:
+    #   - db-service-db
     depends_on:
       - db-service-db
+    environment:
+      MONGO_URI: mongodb://james:666666@db-service-db/ph-test
+    volumes:
+      - ./db-service:/opt/app
+    # networks:
+    #   - db-network
 
   db-service-db:
     image: mongo
     restart: always
+    ports:
+      - "5001:27017"
     environment:
-      MONGO_INITDB_DATABASE: ph-test
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: password
-    volumes:
-      - ./init-db-svc-data.js/docker-entrypoint-initdb.d/init-db-svc-data.js:ro
-      - ./db-service-vol:/data/db
+      # MONGO_INITDB_DATABASE: ph-test
+      MONGO_INITDB_ROOT_USERNAME: james
+      MONGO_INITDB_ROOT_PASSWORD: 666666
+    # networks:
+    #   - db-network
 
   auth-service:
-    build: "./auth-service"
+    build:
+      context: "."
+      dockerfile: "./auth-service/Dockerfile"
     ports:
       - "8000:8000"
+    # links:
+    #   - auth-service-db
     depends_on:
       - auth-service-db
+    environment:
+      MONGO_URI: mongodb://james:666666@auth-service-db/ph-test-user
+    # networks:
+    #   - auth-network
+    volumes:
+      - ./auth-service:/opt/app
 
   auth-service-db:
     image: mongo
     restart: always
+    ports:
+      - "8001:27017"
     environment:
-      MONGO_INITDB_DATABASE: ph-test-user
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: password
-    volumes:
-      - ./init-auth-svc-data.js/docker-entrypoint-initdb.d/init-auth-svc-data.js:ro
-      - ./auth-service-vol:/data/db
+      # MONGO_INITDB_DATABASE: ph-test-user
+      MONGO_INITDB_ROOT_USERNAME: james
+      MONGO_INITDB_ROOT_PASSWORD: 666666
+    # networks:
+    #   - auth-network
 
   bff-service:
     build: "./bff-service"
+    depends_on:
+      - db-service
+      - auth-service
+    environment:
+      - DB_SERVICE_URI=http://db-service:5000
+      - AUTH_SERVICE_URI=http://auth-service:8000
     ports:
       - "4000:4000"

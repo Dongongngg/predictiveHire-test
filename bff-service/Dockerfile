@@ -1,8 +1,8 @@
 FROM node:latest
 
-COPY . /ph-test
+COPY . /bff-service
 
-WORKDIR /ph-test
+WORKDIR /bff-service
 
 RUN npm install
 

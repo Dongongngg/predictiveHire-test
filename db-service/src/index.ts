@@ -27,5 +27,5 @@ app.use(companyRoute);
 app.use(vacancyRoute);
 
 app.listen(PORT, () => {
-  console.log(`db service runing on port ${PORT}`);
+  console.log(`db service running on http://localhost:${PORT}`);
 });

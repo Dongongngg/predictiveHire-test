@@ -1,8 +1,8 @@
 FROM node:latest
 
-COPY . /test
+COPY . /opt/app
 
-WORKDIR /test
+WORKDIR /opt/app/auth-service
 
 RUN npm install
 

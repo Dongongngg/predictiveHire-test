@@ -13,6 +13,8 @@ const authConnector = async (input: LoginInput): Promise<AuthRes> => {
     .then((res) => res.json())
     .then((data) => {
       if (data.success) {
+        // localStorage.setItem('user', JSON.stringify(data.data));
+
         return data;
       } else {
         return new Error(data.data);

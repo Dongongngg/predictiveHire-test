@@ -25,5 +25,5 @@ app.use(jsonParser);
 app.use(userRoute);
 
 app.listen(PORT, () => {
-  console.log(`db service runing on port ${PORT}`);
+  console.log(`auth service running on http://localhost:${PORT}`);
 });
