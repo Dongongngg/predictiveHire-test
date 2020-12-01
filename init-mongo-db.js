@@ -1,13 +1,14 @@
-db.auth("admin", "666666");
 print(
   "Start #################################################################"
 );
 
+db.auth("admin", "666666");
+
 db = db.getSiblingDB("db-service");
 
-db.createCollection("company");
-
-db.company.insert({
+db.drop("Company");
+db.createCollection("Company");
+db.Company.insert({
   _id: ObjectId("5e5df7fc6953acd3dc50fe8f"),
   name: "PredictiveHire",
   address: "15 Newton St",
@@ -15,7 +16,9 @@ db.company.insert({
   vacancys: []
 });
 
-db.company.insert({
+db.drop("Vacancy");
+db.createCollection("Vacancy");
+db.Vacancy.insert({
   title: "Vacancy test",
   description: "this is a test",
   expiredAt:

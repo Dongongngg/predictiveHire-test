@@ -28,7 +28,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 server.applyMiddleware({ app });
-
-app.listen({ port: 4000 }, () =>
-  console.log(`Server listening on http://localhost:4000${server.graphqlPath}`),
+const PORT = { port: 4000 };
+app.listen(PORT, () =>
+  console.log(`Server listening on http://localhost:${PORT.port}${server.graphqlPath}`),
 );

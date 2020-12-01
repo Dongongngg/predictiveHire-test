@@ -1,4 +1,11 @@
 version: "3.7"
+networks:
+  api-gateway:
+    driver: bridge
+  db-network:
+    driver: bridge
+  auth-network:
+    driver: bridge
 
 services:
   bff-service:
@@ -6,50 +13,31 @@ services:
     depends_on:
       - db-service
       - auth-service
-    # environment:
-    #   - DB_SERVICE_URI=http://db-service:5000/
-    #   - AUTH_SERVICE_URI=http://auth-service:8000/
+    environment:
+      - DB_SERVICE_URI=http://db-service:5000/
+      - AUTH_SERVICE_URI=http://auth-service:8000/
     ports:
-      - "4001:4000"
+      - "4004:4000"
     volumes:
       - ./bff-service:/opt/app
+    networks:
+      - api-gateway
 
   db-service:
     build:
       context: "."
       dockerfile: "./db-service/Dockerfile"
     ports:
-      - "5001:5000"
+      - "5005:5000"
     depends_on:
       - db-service-db
     volumes:
       - ./db-service:/opt/app
+    networks:
+      - api-gateway
+      - db-network
 
   db-service-db:
-    image: mongo
-    restart: always
-    ports:
-      - "27017:27017"
-    environment:
-      MONGO_INITDB_DATABASE: admin
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: 666666
-    volumes:
-      - ./init-mongo-db.js:/docker-entrypoint-initdb.d/init-mongo-db.js:ro
-      - /db-vol/db-service:/data/db
-
-  auth-service:
-    build:
-      context: "."
-      dockerfile: "./auth-service/Dockerfile"
-    ports:
-      - "8001:8000"
-    depends_on:
-      - auth-service-db
-    volumes:
-      - ./auth-service:/opt/app
-
-  auth-service-db:
     image: mongo
     restart: always
     ports:
@@ -59,5 +47,36 @@ services:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: 666666
     volumes:
+      - ./init-mongo-db.js:/docker-entrypoint-initdb.d/init-mongo-db.js:ro
+      - /db-vol/db-service:/data/db
+    networks:
+      - db-network
+
+  auth-service:
+    build:
+      context: "."
+      dockerfile: "./auth-service/Dockerfile"
+    ports:
+      - "8008:8000"
+    depends_on:
+      - auth-service-db
+    volumes:
+      - ./auth-service:/opt/app
+    networks:
+      - api-gateway
+      - auth-network
+
+  auth-service-db:
+    image: mongo
+    restart: always
+    ports:
+      - "27019:27017"
+    environment:
+      MONGO_INITDB_DATABASE: admin
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: 666666
+    volumes:
       - ./init-mongo-auth.js:/docker-entrypoint-initdb.d/init-mongo-auth.js:ro
       - /db-vol/auth-service:/data/db
+    networks:
+      - auth-network

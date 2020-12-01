@@ -14,7 +14,6 @@ const dbConnector = async (option: connectorOption): Promise<RestRes> => {
   const data: RestRes = await fetch(option.id ? option.url + option.id : option.url, {
     method: option.method,
     headers: {
-      Accept: 'application/json',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(option.input),
