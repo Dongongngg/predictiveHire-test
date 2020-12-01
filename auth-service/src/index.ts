@@ -15,7 +15,6 @@ connectDB();
 
 const app: Application = express();
 
-// create application/json parser
 const jsonParser = bodyParser.json();
 
 const PORT = process.env.PORT;

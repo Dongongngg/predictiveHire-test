@@ -1,4 +1,8 @@
-import { Request, Response, NextFunction } from 'express';
+//  Check the token of req.header
+//  if token valide, return
+//  if invalid send res
+
+import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
 export interface Payload {
@@ -6,15 +10,14 @@ export interface Payload {
   username: string;
 }
 
-const tokenValidator = (req: Request, res: Response, next: NextFunction): void => {
+const tokenValidator = (req: Request, res: Response): Payload | void => {
   const token: string | undefined = req.header('authToken');
   if (!token) {
     res.status(401).send('unauthorized');
   } else {
     try {
       const profile = jwt.verify(token, process.env.TOKEN_SECRET || '') as Payload;
-
-      next();
+      return profile;
     } catch (err) {
       res.status(401).send('unauthorized');
     }

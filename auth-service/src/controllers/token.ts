@@ -1,3 +1,5 @@
+//  authorize user with jwt
+//  find username and password from db
 import { Response, Request } from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../models/user';
@@ -7,7 +9,7 @@ import User from '../models/user';
 // @access  public
 
 const createToken = async (req: Request, res: Response): Promise<void> => {
-  // Check if user exist
+  // Check if username exist
   console.log({ username: req.body.username });
 
   let loginUser = await User.findOne({ username: req.body.username });
@@ -29,7 +31,7 @@ const createToken = async (req: Request, res: Response): Promise<void> => {
     const newToken = jwt.sign({ _id: loginUser._id }, process.env.TOKEN_SECRET || '', {
       expiresIn: 3600,
     });
-
+    // send logged in profile
     res
       .header('authToken', newToken)
       .status(200)

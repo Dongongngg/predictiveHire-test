@@ -23,7 +23,6 @@ const server = new ApolloServer({
   context: ({ req }) => {
     // get token from the headers
     const token: string = req.header('authToken') || '';
-    console.log('token', req.headers);
 
     // try to retrieve a user with the token
     const role: string = req.header('role') || '';

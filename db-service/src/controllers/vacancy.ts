@@ -17,7 +17,7 @@ const getVacancys = async (req: Request, res: Response): Promise<void> => {
 
 // @desc    get one vacancy by id
 // @route   GET /api/vacancy/:id
-// @access  all user
+// @access  admin, user
 
 const getVacancyById = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -34,7 +34,7 @@ const getVacancyById = async (req: Request, res: Response): Promise<void> => {
 
 // @desc    create an vacancy
 // @route   POST /api/vacancy/
-// @access  admin user
+// @access  admin
 
 const addVacancy = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -56,7 +56,7 @@ const addVacancy = async (req: Request, res: Response): Promise<void> => {
 
 // @desc    edit an vacancy
 // @route   PUT /api/vacancy/:id
-// @access  admin user
+// @access  admin
 
 const updateVacancy = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -89,7 +89,7 @@ const updateVacancy = async (req: Request, res: Response): Promise<void> => {
 
 // @desc    delete an vacancy
 // @route   DELETE /api/vacancy/:id
-// @access  admin user
+// @access  admin
 
 const deleteVacancy = async (req: Request, res: Response): Promise<void> => {
   try {

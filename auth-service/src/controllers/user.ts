@@ -1,3 +1,4 @@
+//  generate seed user for testing
 import { Response, Request } from 'express';
 import User from '../models/user';
 import { MyUser } from '../types/user';
@@ -15,8 +16,8 @@ const getAllUsers = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-// @desc    create an user
-// @route   POST /auth/user
+// @desc    create seed user
+// @route   POST /test/user/seed
 // @access  test
 
 const addSeedUser = async (req: Request, res: Response): Promise<void> => {

@@ -1,7 +1,8 @@
 import { LoginInput, AuthRes } from '../interfaces/auth';
 import fetch from 'node-fetch';
-const url = 'http://localhost:8000/auth/';
-// const url = 'http://auth-service:8000/auth/';
+// const url = 'http://localhost:8000/auth/';
+const url = 'http://auth-service:8000/auth/';
+
 const authConnector = async (input: LoginInput): Promise<AuthRes> => {
   const data: AuthRes = await fetch(url + 'login/', {
     method: 'POST',
@@ -14,8 +15,6 @@ const authConnector = async (input: LoginInput): Promise<AuthRes> => {
     .then((res) => res.json())
     .then((data) => {
       if (data.success) {
-        // localStorage.setItem('user', JSON.stringify(data.data));
-
         return data;
       } else {
         return new Error(data.data);

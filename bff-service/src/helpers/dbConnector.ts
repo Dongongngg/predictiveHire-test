@@ -1,8 +1,10 @@
+//  Use Graphql as wrapper to send request to db-service
+//  Check if user as logged in and user's role
+//  option: method of fetch, db-service url, request id, request data
+//  this one is for all users
+
 import fetch from 'node-fetch';
 import { VacancyInput, RestRes, AuthInfo } from '../interfaces/db';
-
-//  Use Graphql as wrapper to send rest api request
-
 interface connectorOption {
   method: string;
   url: string;
@@ -11,8 +13,7 @@ interface connectorOption {
 }
 
 const dbConnector = async (option: connectorOption, context: AuthInfo): Promise<RestRes | void> => {
-  console.log('ctx', context);
-
+  //  check if logged in
   if (!context.loggedIn) {
     throw new Error('Please login');
   } else {
@@ -37,13 +38,17 @@ const dbConnector = async (option: connectorOption, context: AuthInfo): Promise<
   }
 };
 
+//  this one is for admin, check information in context,  if  role has admin with end request to db-service
+
 const dbConnectorAdmin = async (
   option: connectorOption,
   context: AuthInfo,
 ): Promise<RestRes | void> => {
+  //  check if logged in
   if (!context.loggedIn) {
     throw new Error('Please login');
   } else {
+    //   check if is admin
     if (context.role.includes('admin')) {
       const data: RestRes = await fetch(option.id ? option.url + option.id : option.url, {
         method: option.method,

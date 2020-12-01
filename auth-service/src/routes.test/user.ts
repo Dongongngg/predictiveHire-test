@@ -1,3 +1,4 @@
+//  generate seed user for testing
 import { Router } from 'express';
 import { addSeedUser } from '../controllers/user';
 

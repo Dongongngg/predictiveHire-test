@@ -3,7 +3,7 @@ import { MyCompany } from '../types/company';
 import Company from '../models/company';
 
 // @desc    get all companys
-// @route   GET /test/companys
+// @route   GET /api/companys
 // @access  test
 
 const getCompanys = async (req: Request, res: Response): Promise<void> => {
@@ -15,7 +15,7 @@ const getCompanys = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-// @desc    create all companys
+// @desc    create companys seed
 // @route   POST /test/company/seed
 // @access  test
 

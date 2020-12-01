@@ -1,15 +1,14 @@
+// define all the query and mutation for db-service
+
 import { dbConnector, dbConnectorAdmin } from '../helpers/dbConnector';
 import { VacancyInput, RestRes, AuthInfo } from '../interfaces/db';
 
-//  restUrl => 'http://db-service:5000/api/';
-//  dbConnector:
-//      method: string,
-//      url: string,
-//      id?: string,
-//      input?: VacancyInput
+//  dbConnector/dbConnectorAdmin:
+//     { method,url,id,input},
+//      context
 
-const url = 'http://localhost:5000/api/';
-// const url = 'http://db-service:5000/api/';
+// const url = 'http://localhost:5000/api/';
+const url = 'http://db-service:5000/api/';
 
 const resolvers = {
   Query: {
