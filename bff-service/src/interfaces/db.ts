@@ -14,3 +14,8 @@ export interface RestRes {
   success: boolean;
   data: Vacancy | string | Vacancy[];
 }
+
+export interface AuthInfo {
+  loggedIn: boolean;
+  role: string[];
+}

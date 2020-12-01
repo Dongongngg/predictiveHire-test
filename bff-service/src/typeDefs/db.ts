@@ -3,7 +3,6 @@ import gql from 'graphql-tag';
 const typeDefs = gql`
   type Query {
     test: String!
-    test2: String!
     getVacancys: RestResArr
     getVacancy(_id: ID!): RestRes
   }

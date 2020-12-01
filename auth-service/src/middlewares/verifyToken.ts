@@ -6,16 +6,17 @@ export interface Payload {
   username: string;
 }
 
-const tokenValidator = (req: Request, res: Response, next: NextFunction): Response | void => {
-  const token: string | undefined = req.header('auth-token');
+const tokenValidator = (req: Request, res: Response, next: NextFunction): void => {
+  const token: string | undefined = req.header('authToken');
   if (!token) {
-    return res.status(401).send('unauthorized');
+    res.status(401).send('unauthorized');
   } else {
     try {
-      jwt.verify(token, process.env.TOKEN_SECRET || '') as Payload;
-      return next();
+      const profile = jwt.verify(token, process.env.TOKEN_SECRET || '') as Payload;
+
+      next();
     } catch (err) {
-      return res.status(401).send('unauthorized');
+      res.status(401).send('unauthorized');
     }
   }
 };

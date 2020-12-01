@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="test.js"></script>
+    <title>Client Service</title>
+    <style>
+      button {
+        font-size: 15px;
+      }
+      .res {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section>
+        <h2 id="connection">waiting for connection...</h2>
+        <button onclick="createCompanySeed()">create seed</button>
+        <button onclick="createUserSeed()">user seed</button>
+      </section>
+      <!-- test bff for rest response -->
+      <section>
+        <h1>bff-service(graphql):</h1>
+        <button onclick="getVacancys()">getVacancys</button>
+        <button onclick="createVacancy()">createVacancy</button>
+
+        <input id="delete-id" />
+        <button onclick="deleteVacancy()">deleteVacancy</button>
+
+        <input id="update-id" />
+        <button onclick="updateVacancy()">updateVacancy</button>
+      </section>
+      <!-- test auth -->
+      <section>
+        <h1>auth-service:</h1>
+        <label>Bob</label>
+        <button onclick="signInBob()">sign in</button>
+        <label>Mark</label>
+        <button onclick="signInMark()">sign in</button>
+      </section>
+      <!-- response -->
+      <section>
+        <pre id="res" class="res">api response here</pre>
+      </section>
+    </main>
+  </body>
+</html>

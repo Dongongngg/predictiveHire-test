@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { getCompanys, addCompany } from '../controllers/test';
+import { getCompanys, addSeedCompany } from '../controllers/test';
 
 const router: Router = Router();
 
-router.get('/test/companys', getCompanys);
-router.post('/test/company', addCompany);
+router.get('/api/companys', getCompanys);
+router.post('/test/company/seed', addSeedCompany);
 
 export default router;

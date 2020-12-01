@@ -17,7 +17,7 @@ services:
       - DB_SERVICE_URI=http://db-service:5000/
       - AUTH_SERVICE_URI=http://auth-service:8000/
     ports:
-      - "4004:4000"
+      - "4000:4000"
     volumes:
       - ./bff-service:/opt/app
     networks:
@@ -28,7 +28,7 @@ services:
       context: "."
       dockerfile: "./db-service/Dockerfile"
     ports:
-      - "5005:5000"
+      - "5000:5000"
     depends_on:
       - db-service-db
     volumes:
@@ -57,7 +57,7 @@ services:
       context: "."
       dockerfile: "./auth-service/Dockerfile"
     ports:
-      - "8008:8000"
+      - "8000:8000"
     depends_on:
       - auth-service-db
     volumes:

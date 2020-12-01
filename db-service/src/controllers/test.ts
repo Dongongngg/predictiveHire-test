@@ -16,23 +16,28 @@ const getCompanys = async (req: Request, res: Response): Promise<void> => {
 };
 
 // @desc    create all companys
-// @route   POST /test/company
+// @route   POST /test/company/seed
 // @access  test
 
-const addCompany = async (req: Request, res: Response): Promise<void> => {
+const addSeedCompany = async (req: Request, res: Response): Promise<void> => {
   try {
-    const body = req.body;
-    const company: MyCompany = new Company({
-      name: body.name,
-      location: body.location,
-    });
+    const company: MyCompany[] = await Company.find({ name: 'PredictiveHire' });
 
-    const newCompany: MyCompany = await Company.create(company);
+    if (company.length === 0) {
+      const PH: MyCompany = new Company({
+        name: 'PredictiveHire',
+        address: '15 Newton St',
+      });
 
-    res.status(201).json({ success: true, data: newCompany });
+      const seed: MyCompany = await Company.create(PH);
+
+      res.status(200).json({ success: true, data: seed });
+    } else {
+      res.status(401).json({ success: false, data: 'seed exist' });
+    }
   } catch (error) {
     res.status(500).json({ success: false, data: error.message });
   }
 };
 
-export { getCompanys, addCompany };
+export { getCompanys, addSeedCompany };

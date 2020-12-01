@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { login, getAllUsers, addUser } from '../controllers/user';
+import { createToken } from '../controllers/token';
+import { getAllUsers } from '../controllers/user';
 
 const router: Router = Router();
 
-router.post('/auth/login', login);
-router.post('/auth/user', addUser);
+router.post('/auth/login', createToken);
 router.get('/auth/users', getAllUsers);
 
 export default router;

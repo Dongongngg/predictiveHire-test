@@ -13,12 +13,26 @@ const server = new ApolloServer({
   resolvers: resolvers,
   formatError: (err) => {
     // Don't give the specific errors to the client.
-    if (err.message.startsWith('Field ')) {
+    if (err.message.startsWith('Field ' || 'invalid json response body')) {
       return new Error('Input format error');
     } else if (err.message.startsWith('Cast to ObjectId failed for value')) {
       throw new Error('id format error');
     }
     return err;
+  },
+  context: ({ req }) => {
+    // get token from the headers
+    const token: string = req.header('authToken') || '';
+    console.log('token', req.headers);
+
+    // try to retrieve a user with the token
+    const role: string = req.header('role') || '';
+
+    if (token) {
+      return { loggedIn: true, role: role };
+    } else {
+      return { loggedIn: false, role: role };
+    }
   },
 });
 
