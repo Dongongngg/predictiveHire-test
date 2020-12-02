@@ -28,10 +28,12 @@ const createToken = async (req: Request, res: Response): Promise<void> => {
       data: 'Password is wrong.',
     });
   } else {
+    const expires = 600;
     const newToken = jwt.sign({ _id: loginUser._id }, process.env.TOKEN_SECRET || '', {
-      expiresIn: 3600,
+      expiresIn: expires,
     });
-    // send logged in profile
+
+    // send profile
     res
       .header('authToken', newToken)
       .status(200)

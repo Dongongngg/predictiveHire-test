@@ -7,8 +7,8 @@ import { VacancyInput, RestRes, AuthInfo } from '../interfaces/db';
 //     { method,url,id,input},
 //      context
 
-// const url = 'http://localhost:5000/api/';
-const url = 'http://db-service:5000/api/';
+const url = 'http://localhost:5000/api/';
+// const url = 'http://db-service:5000/api/';
 
 const resolvers = {
   Query: {

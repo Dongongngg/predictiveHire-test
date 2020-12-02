@@ -4,12 +4,11 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "test": "node test.js"
   },
   "keywords": [
-    "axios"
+    "javascript"
   ],
-  "type": "module",
   "author": "Jingfu Dong",
   "license": "ISC",
   "dependencies": {}

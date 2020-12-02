@@ -31,6 +31,9 @@ npm run dev
 ## Design
 
 There are three services in this project.
-bff-service: API-gateway using graphql as a rest api wrapper, also authenticate user for each request.
-db-service: Express server using mongoose orm to manage CRUD operation on database db-service-db's vacancy&company collection.
-auth-service: Express server using JWT to provide token and manage user collection on auth-service-db.
+
+- bff-service: API-gateway using graphql as a rest api wrapper, also authenticate user for each request.
+- db-service: Express server using mongoose orm to manage CRUD operation on database db-service-db's vacancy&company collection.
+- auth-service: Express server using JWT to provide token and manage user collection on auth-service-db.
+
+(Run test.html in client-test folder to test api)

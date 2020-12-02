@@ -2,6 +2,8 @@ import express, { Application } from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+//  jwt
+import jwt from 'jsonwebtoken';
 
 // typeDefs
 import typeDefs from './typeDefs';
@@ -26,11 +28,22 @@ const server = new ApolloServer({
 
     // try to retrieve a user with the token
     const role: string = req.header('role') || '';
-
-    if (token) {
-      return { loggedIn: true, role: role };
+    if (!token) {
+      return { loggedIn: false, role: '' };
     } else {
-      return { loggedIn: false, role: role };
+      try {
+        // try to verify token
+        const payload = jwt.verify(token, '91sd2ej91jdojlaqjsd');
+        console.log(payload);
+
+        if (payload) {
+          return { loggedIn: true, role: role };
+        } else {
+          return { loggedIn: false, role: '' };
+        }
+      } catch (err) {
+        return err;
+      }
     }
   },
 });
