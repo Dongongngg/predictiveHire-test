@@ -1,7 +1,7 @@
 import { LoginInput, AuthRes } from '../interfaces/auth';
 import fetch from 'node-fetch';
-const url = 'http://localhost:8000/auth/';
-// const url = 'http://auth-service:8000/auth/';
+// const url = 'http://localhost:8000/auth/';
+const url = 'http://auth-service:8000/auth/';
 
 const authConnector = async (input: LoginInput): Promise<AuthRes> => {
   const data: AuthRes = await fetch(url + 'login/', {
